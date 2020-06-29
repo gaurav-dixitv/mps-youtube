@@ -95,10 +95,9 @@ commands = []
 
 text = {
     "exitmsg": ("*mps-youtube - *https://github.com/mps-youtube/mps-youtube*"
-                "\nforked - *https://github.com/gaurav-dixitv/mps-youtube*"
                 "\nReleased under the GPLv3 license\n"
                 "(c) 2014, 2015 np1 and contributors*\n"""),
-    "exitmsg_": (c.r, c.b, c.g, c.b, c.y, c.w),
+    "exitmsg_": (c.r, c.b, c.r, c.w),
 
     # Error / Warning messages
 

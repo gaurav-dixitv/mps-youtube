@@ -121,9 +121,6 @@ def generate_songlist_display(song=False, zeromsg=None):
         otitle = details['title']
         details['idx'] = "%2d" % (n + 1)
         details['title'] = uea_pad(columns[1]['size'], otitle)
-        if have_meta:
-            if g.meta[x.ytid]['liveBroadcastContent'] == 'live':
-                details['length'] = 'live'
         cat = details.get('category') or '-'
         details['category'] = pafy.get_categoryname(cat)
         details['ytid'] = x.ytid
@@ -210,28 +207,7 @@ def logo(col=None, version=""):
     """ Return text logo. """
     col = col if col else random.choice((c.g, c.r, c.y, c.b, c.p, c.w))
     logo_txt = r"""                                             _         _
-forked     _ __  ___       _   _  ___  _   _| |_ _   _| |__   ___
-| '_ ` _ \| '_ \/ __|_____| | | |/ _ \| | | | __| | | | '_ \ / _ \
-| | | | | | |_) \__ \_____| |_| | (_) | |_| | |_| |_| | |_) |  __/
-|_| |_| |_| .__/|___/      \__, |\___/ \__,_|\__|\__,_|_.__/ \___|
-          |_|              |___/"""
-    version = " v" + version if version else ""
-    logo_txt = col + logo_txt + c.w + version
-    lines = logo_txt.split("\n")
-    length = max(len(x) for x in lines)
-    x, y, _ = getxy()
-    indent = (x - length - 1) // 2
-    newlines = (y - 12) // 2
-    indent, newlines = (0 if x < 0 else x for x in (indent, newlines))
-    lines = [" " * indent + l for l in lines]
-    logo_txt = "\n".join(lines) + "\n" * newlines
-    return "" if g.no_textart else logo_txt
-
-def og_logo(col=None, version=""):
-    """ Return text logo. """
-    col = col if col else random.choice((c.g, c.r, c.y, c.b, c.p, c.w))
-    logo_txt = r"""                                             _         _
-           _ __  ___       _   _  ___  _   _| |_ _   _| |__   ___
+ _ __ ___  _ __  ___       _   _  ___  _   _| |_ _   _| |__   ___
 | '_ ` _ \| '_ \/ __|_____| | | |/ _ \| | | | __| | | | '_ \ / _ \
 | | | | | | |_) \__ \_____| |_| | (_) | |_| | |_| |_| | |_) |  __/
 |_| |_| |_| .__/|___/      \__, |\___/ \__,_|\__|\__,_|_.__/ \___|

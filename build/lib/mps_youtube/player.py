@@ -170,18 +170,13 @@ class BasePlayer:
         multi = len(allsongs) > 1
 
         for n, song in enumerate(allsongs):
-            if song.length >= 0:
-                length_orig = util.fmt_time(song.length)
-                length = " " * (8 - len(length_orig)) + length_orig
-                i = util.uea_pad(cw - 14, song.title), length, length_orig
-                fmt = (c.w, "  ", c.b, i[0], c.w, c.y, i[1], c.w)
-            else:
-                length = "live"
-                i = util.uea_pad(cw - 14, song.title), length, length
-                fmt = (c.w, "  ", c.b, i[0], c.w, c.y, i[1], c.w)
+            length_orig = util.fmt_time(song.length)
+            length = " " * (8 - len(length_orig)) + length_orig
+            i = util.uea_pad(cw - 14, song.title), length, length_orig
+            fmt = (c.w, "  ", c.b, i[0], c.w, c.y, i[1], c.w)
 
             if n == idx:
-                fmt = (c.g, "> ", c.g, i[0], c.w, c.g, i[1], c.w)
+                fmt = (c.y, "> ", c.p, i[0], c.w, c.p, i[1], c.w)
                 cur = i
 
             out += "%s%s%s%s%s %s%s%s\n" % fmt
@@ -199,7 +194,7 @@ class BasePlayer:
             playing = "{}{}{}{} of {}{}{}\n".format(*pos) if multi else "\n"
             out += "\n" + " " * (cw - 19) if multi else ""
 
-        fmt = playing, c.g, cur[0].strip()[:cw - 19], c.w, c.r, cur[2], c.w
+        fmt = playing, c.r, cur[0].strip()[:cw - 19], c.w, c.w, cur[2], c.w
         out += "%s    %s%s%s %s[%s]%s" % fmt
         out += "    REPEAT MODE" if repeat else ""
         return out
@@ -227,33 +222,25 @@ class BasePlayer:
                 display_h = display_m // 60
                 display_m %= 60
 
-        status_line = vol_suffix = ""
-        if not g.debug_mode:
-            prefix = "   "
+        pct = (float(elapsed_s) / songlength * 100) if songlength else 0
+
+        status_line = "%02i:%02i:%02i %s" % (
+            display_h, display_m, display_s,
+            ("[%.0f%%]" % pct).ljust(6)
+        )
+
         if volume:
             vol_suffix = " vol: %d%%" % volume
 
-        if songlength != -1:
-            pct = (float(elapsed_s) / songlength * 100) if songlength else 0
-            status_line = "%02i:%02i:%02i %s" % (
-                display_h, display_m, display_s,
-                ("[%.0f%%]" % pct).ljust(6)
-            )
-            cw = util.getxy().width
-            prog_bar_size = cw - len(prefix) - len(status_line) - len(vol_suffix) - 7
-            progress = int(math.ceil(pct / 100 * prog_bar_size))
-            status_line += " [%s]" % ("=" * (progress - 1) +
-                                    ">").ljust(prog_bar_size, ' ')
         else:
-            status_line = "%02i:%02i:%02i" % (
-                display_h, display_m, display_s
-            )
-            animation_frames = ['/','─','\\','|']
-            spacer_size = util.getxy().width - len(prefix) - len(status_line) - len(vol_suffix) - 10
-            status_line += " [" + animation_frames[elapsed_s % len(animation_frames)] + "]"
-            status_line += "  %s " % (" " * (spacer_size - 1))
-        return (prefix + status_line + vol_suffix).format(c.w, c.r, c.g)
+            vol_suffix = ""
 
+        cw = util.getxy().width
+        prog_bar_size = cw - len(prefix) - len(status_line) - len(vol_suffix) - 7
+        progress = int(math.ceil(pct / 100 * prog_bar_size))
+        status_line += " [%s]" % ("=" * (progress - 1) +
+                                  ">").ljust(prog_bar_size, ' ')
+        return prefix + status_line + vol_suffix
 
 
 class CmdPlayer(BasePlayer):

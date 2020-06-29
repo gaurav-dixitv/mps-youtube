@@ -318,7 +318,7 @@ class _Config:
             ConfigItem("playerargs", ""),
             ConfigItem("encoder", 0, minval=0, check_fn=check_encoder),
             ConfigItem("notifier", ""),
-            ConfigItem("checkupdate", False),
+            ConfigItem("checkupdate", True),
             ConfigItem("show_player_keys", True, require_known_player=True),
             ConfigItem("fullscreen", False, require_known_player=True),
             ConfigItem("show_status", True),

@@ -476,9 +476,9 @@ def get_tracks_from_json(jsons):
                     duration = [int(v) if len(v) > 0 else 0 for v in duration]
                     duration = sum([60**p*v for p, v in enumerate(duration)])
                 else:
-                    duration = -1
+                    duration = 30
             else:
-                duration = -1
+                duration = 30
 
             stats = item.get('statistics', {})
             snippet = item.get('snippet', {})
@@ -491,7 +491,6 @@ def get_tracks_from_json(jsons):
             rating = 5.*likes/(likes+dislikes) if (likes+dislikes) > 0 else 0
             category = snippet.get('categoryId')
             publishedlocaldatetime = util.yt_datetime_local(snippet.get('publishedAt', ''))
-            liveBroadcastContent = snippet.get("liveBroadcastContent")
 
             # cache video information in custom global variable store
             g.meta[ytid] = dict(
@@ -505,7 +504,6 @@ def get_tracks_from_json(jsons):
                 uploader=snippet.get('channelId'),
                 uploaderName=snippet.get('channelTitle'),
                 category=category,
-                liveBroadcastContent=liveBroadcastContent,
                 aspect="custom", #XXX
                 uploaded=publishedlocaldatetime[1],
                 uploadedTime=publishedlocaldatetime[2],
