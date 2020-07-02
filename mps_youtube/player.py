@@ -149,8 +149,18 @@ class BasePlayer:
 
         if metadata is None:
             arturl = "https://i.ytimg.com/vi/%s/default.jpg" % self.song.ytid
-            metadata = (self.song.ytid, self.song.title, self.song.length,
-                        arturl, [''], '')
+            if self.song.ytid in g.meta:
+                # data from mpsyt
+                metadata = (self.song.ytid, self.song.title, self.song.length,
+                            arturl, [g.meta[self.song.ytid]['channelTitle']], '')
+            if self.song.ytid in g.pafs:
+                # active track from pafy (playlist)
+                metadata = (self.song.ytid, self.song.title, self.song.length, 
+                            arturl, [g.pafs[self.song.ytid].author], '')
+            else:
+                metadata = (self.song.ytid, self.song.title, self.song.length,
+                            arturl, ['[warn]unknown'], '')
+
         else:
             arturl = metadata['album_art_url']
             metadata = (self.song.ytid, metadata['track_title'],

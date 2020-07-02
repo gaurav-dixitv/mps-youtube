@@ -259,6 +259,8 @@ def getxy():
 
 def fmt_time(seconds):
     """ Format number of seconds to %H:%M:%S. """
+    if seconds < 0:
+        return seconds
     hms = time.strftime('%H:%M:%S', time.gmtime(int(seconds)))
     H, M, S = hms.split(":")
 

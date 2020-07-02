@@ -492,6 +492,7 @@ def get_tracks_from_json(jsons):
             category = snippet.get('categoryId')
             publishedlocaldatetime = util.yt_datetime_local(snippet.get('publishedAt', ''))
             liveBroadcastContent = snippet.get("liveBroadcastContent")
+            channelTitle = snippet.get("channelTitle")
 
             # cache video information in custom global variable store
             g.meta[ytid] = dict(
@@ -506,6 +507,7 @@ def get_tracks_from_json(jsons):
                 uploaderName=snippet.get('channelTitle'),
                 category=category,
                 liveBroadcastContent=liveBroadcastContent,
+                channelTitle=channelTitle,
                 aspect="custom", #XXX
                 uploaded=publishedlocaldatetime[1],
                 uploadedTime=publishedlocaldatetime[2],
