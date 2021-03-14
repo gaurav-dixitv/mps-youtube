@@ -153,6 +153,10 @@ class BasePlayer:
                 # data from mpsyt
                 metadata = (self.song.ytid, self.song.title, self.song.length,
                             arturl, [g.meta[self.song.ytid]['channelTitle']], '')
+            else:
+                metadata = (self.song.ytid, self.song.title, self.song.length, 
+                            arturl, [self.song.author], '')
+            """
             if self.song.ytid in g.pafs:
                 # active track from pafy (playlist)
                 metadata = (self.song.ytid, self.song.title, self.song.length, 
@@ -160,7 +164,7 @@ class BasePlayer:
             else:
                 metadata = (self.song.ytid, self.song.title, self.song.length,
                             arturl, ['[warn]unknown'], '')
-
+            """
         else:
             arturl = metadata['album_art_url']
             metadata = (self.song.ytid, metadata['track_title'],

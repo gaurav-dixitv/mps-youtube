@@ -35,8 +35,9 @@ class Video:
 
     """ Class to represent a YouTube video. """
     description = ""
-    def __init__(self, ytid, title, length):
+    def __init__(self, ytid, title, length, author = ""):
         """ class members. """
         self.ytid = ytid
         self.title = title
         self.length = int(length)
+        self.author = author

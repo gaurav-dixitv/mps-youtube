@@ -483,8 +483,9 @@ def get_tracks_from_json(jsons):
             stats = item.get('statistics', {})
             snippet = item.get('snippet', {})
             title = snippet.get('title', '').strip()
+            channelTitle = snippet.get("channelTitle")
             # instantiate video representation in local model
-            cursong = Video(ytid=ytid, title=title, length=duration)
+            cursong = Video(ytid=ytid, title=title, length=duration, author=channelTitle)
             likes = int(stats.get('likeCount', 0))
             dislikes = int(stats.get('dislikeCount', 0))
             #XXX this is a very poor attempt to calculate a rating value
@@ -492,7 +493,6 @@ def get_tracks_from_json(jsons):
             category = snippet.get('categoryId')
             publishedlocaldatetime = util.yt_datetime_local(snippet.get('publishedAt', ''))
             liveBroadcastContent = snippet.get("liveBroadcastContent")
-            channelTitle = snippet.get("channelTitle")
 
             # cache video information in custom global variable store
             g.meta[ytid] = dict(

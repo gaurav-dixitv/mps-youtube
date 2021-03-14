@@ -89,7 +89,7 @@ def plist(parturl):
         g.pafy_pls[parturl] = (ytpl, plitems)
 
     def pl_seg(s, e):
-        return [Video(i.videoid, i.title, i.length) for i in plitems[s:e]]
+        return [Video(i.videoid, i.title, i.length, i.author) for i in plitems[s:e]]
 
     msg = "Showing YouTube playlist %s" % (c.y + ytpl.title + c.w)
     loadmsg = "Retrieving YouTube playlist"
